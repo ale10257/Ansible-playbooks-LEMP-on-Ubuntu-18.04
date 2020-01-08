@@ -1,6 +1,6 @@
 ---
 
--   name: Install php-fpm7.4
+-   name: Create users
     hosts: site
     remote_user: root
     tasks:

@@ -1,6 +1,0 @@
----
--   name: Add Api Host
-    hosts: site
-    remote_user: root
-    roles:
-        - api_host
