@@ -1,0 +1,2 @@
+domain: example.com
+host_dir: '/home/{{remote_user}}/{{site_public}}/{{domain}}/{{web_dir}}'

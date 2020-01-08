@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    server_name {{domain}};
+    charset utf-8;
+    index index.php;
+    root {{host_dir}};
+    error_log   /home/{{remote_user}}/{{site_public}}/logs/{{domain}}_error.log;
+
+    location / {
+        try_files $uri /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+     }
+}

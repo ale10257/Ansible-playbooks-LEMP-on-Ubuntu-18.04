@@ -1,0 +1,35 @@
+---
+
+-   name: Create host directory
+    file:
+        path: '{{host_dir}}'
+        state: directory
+        owner: '{{remote_user}}'
+        group: '{{remote_user}}'
+
+-   name: Copy index file
+    copy:
+        src: 'templates/index.php'
+        dest: '{{host_dir}}/index.php'
+        owner: '{{remote_user}}'
+        group: '{{remote_user}}'
+
+-   name: Check if virtual host already exists
+    stat:
+        path: /etc/nginx/sites-available/{{ item }}
+    register: vhost_exist
+    with_items: "{{ domain }}"
+
+-   name: Add host
+    template:
+        src: 'templates/{{domain}}.j2'
+        dest: '/etc/nginx/sites-available/{{ item.item }}'
+    with_items: "{{ vhost_exist.results }}"
+    when: not item.stat.exists
+
+-   name: Enable api host
+    file:
+        src: '/etc/nginx/sites-available/{{domain}}'
+        dest: '/etc/nginx/sites-enabled/{{domain}}'
+        state: link
+    notify: Reload nginx
