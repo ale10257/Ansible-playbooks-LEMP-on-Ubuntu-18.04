@@ -1,0 +1,27 @@
+---
+
+-   name: Install php-fpm7.4
+    hosts: site
+    remote_user: root
+    tasks:
+        -   name: Prepare install php-fpm 7.4
+            apt:
+                name: software-properties-common
+                state: present
+                update_cache: yes
+
+        -   name: add repo for php
+            apt_repository:
+                repo: 'ppa:ondrej/php'
+                state: present
+                update_cache: yes
+
+        -   name: Install php-fpm 7.4
+            apt:
+                name:
+                    - php7.4-fpm
+                    - php7.4-cli
+                    - php7.4-mysql
+                    - php7.4-imagick
+                state: present
+                update_cache: yes

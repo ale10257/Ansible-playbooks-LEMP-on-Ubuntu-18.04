@@ -1,0 +1,23 @@
+---
+-   name: Create users
+    hosts: site
+    remote_user: root
+    tasks:
+        -   name: Update apt packages
+            apt:
+                update_cache: yes
+
+        -   name: Add Certbot repository
+            apt_repository:
+                repo: 'ppa:certbot/certbot'
+                state: present
+                update_cache: yes
+
+        -   name: Install Certbot
+            apt:
+                name:
+                    - certbot
+                    - python-certbot-nginx
+                state: present
+                update_cache: yes
+
